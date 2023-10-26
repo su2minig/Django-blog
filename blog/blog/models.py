@@ -9,3 +9,8 @@ class Post(models.Model):
     def __str__(self):
         time = self.created_at.strftime('%Y-%m-%d %H:%M')
         return f'제목: {self.title}, 시간: {time}'
+    
+class Tag(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    def __str__(self):
+        return self.name

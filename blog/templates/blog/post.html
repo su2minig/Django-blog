@@ -1,5 +1,7 @@
 <h1>게시판</h1>
-<p>{{pk.title}}</p>
-<p>{{pk.contents}}</p>
-<p>{{pk.updated_at}}</p>
+<p>{{object.title}}</p>
+<p>{{object.contents}}</p>
+<p>{{object.updated_at}}</p>
+<a href="{% url 'edit' post.pk %}">수정하기</a>
+<a href="{% url 'delete' post.pk %}">삭제하기</a>
 <a href="{% url 'blog' %}">뒤로가기</a>
