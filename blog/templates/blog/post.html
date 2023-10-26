@@ -1,7 +1,10 @@
 <h1>게시판</h1>
-<p>{{object.title}}</p>
-<p>{{object.contents}}</p>
-<p>{{object.updated_at}}</p>
+<p>제목:{{object.title}}</p>
+<p>작성자:{{object.author}}</p>
+<p>내용:{{object.contents}}</p>
+<p>날짜:{{object.updated_at}}</p>
+{% if user == post.author %}
 <a href="{% url 'edit' post.pk %}">수정하기</a>
 <a href="{% url 'delete' post.pk %}">삭제하기</a>
+{% endif %}
 <a href="{% url 'blog' %}">뒤로가기</a>
