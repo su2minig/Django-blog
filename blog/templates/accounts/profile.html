@@ -8,5 +8,19 @@
 <body>
     <h1>프로필 페이지입니다.</h1>
     <p>{{user}}의 프로필 페이지입니다.</p>
+    <table>
+        <tr>
+            <td>별명</td>
+            <td>{{ user.username }}</td>
+        </tr>
+        <tr>
+            <td>이메일</td>
+            <td>{{ user.email }}</td>
+        </tr>
+    </table>
+    form
+    <a href="{% url 'update' pk=user.pk %}">
+        <p>회원정보수정</p>
+    </a>
 </body>
 </html>

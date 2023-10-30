@@ -1,7 +1,19 @@
 <h1>게시판</h1>
 <p>제목:{{object.title}}</p>
+<p>조회수 : {{post.view_count}}</p>
 <p>작성자:{{object.author}}</p>
 <p>내용:{{object.contents}}</p>
+
+{% if object.image %}
+<img src="{{ object.image.url }}" alt="">
+{% endif %}
+<section>
+    <h3>
+    {% for tag in post.tags.all %}
+        #{{tag.name}}
+    {% endfor %}</h3>
+    
+</section>
 <p>날짜:{{object.updated_at}}</p>
 {% if user == post.author %}
 <a href="{% url 'edit' post.pk %}">수정하기</a>
