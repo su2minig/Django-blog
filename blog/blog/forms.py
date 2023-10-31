@@ -1,18 +1,15 @@
 from django import forms
-from .models import Post, Tag
-# , Comment
+from .models import Post, Tag, Comment
 
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        # fields = '__all__'
         fields = ['title', 'contents', 'image', 'file','tags'] 
-        #  'thumb_image', 'file_upload', 
-
-# class CommentForm(forms.ModelForm):
-#     class Meta:
-#         model = Comment
-#         fields = ['message']
+class CommentForm(forms.ModelForm):
+    content = forms.CharField(widget=forms.Textarea)
+    class Meta:
+        model = Comment
+        fields = ['content']
 
 
 class TagForm(forms.ModelForm):

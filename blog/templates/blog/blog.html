@@ -5,8 +5,8 @@
 </form>
 <ul>
     {% for post in object_list %}
-    <li><a href="{% url 'post' post.pk %}">{{post.title}}</a></li>
+    <li><a href="{% url 'blog:post' post.pk %}">{{post.title}}</a></li>
     {% endfor %}
 </ul>
 
-<a href="{% url 'write' %}">글쓰기</a>
+<a href="{% url 'blog:write' %}">글쓰기</a>

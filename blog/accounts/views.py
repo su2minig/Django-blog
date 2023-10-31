@@ -1,16 +1,16 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth.models import User
+from .models import User
 from django.shortcuts import render
 from django.views.generic import CreateView
 from accounts.forms import AccountUpdateForm
 from django.views.generic.edit import UpdateView
 from django.urls.base import reverse_lazy
+from .forms import UserForm
 
 signup = CreateView.as_view(
-    form_class = UserCreationForm,
+    form_class = UserForm,
     template_name = 'accounts/form.html',
     success_url = '/accounts/login/'
 )

@@ -2,22 +2,25 @@ from typing import Any
 # from django.db.models.query import QuerySet
 # from django.http import HttpResponse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Post
-from .forms import PostForm
+from .models import Post, Comment
+from .forms import PostForm, CommentForm
 from django.urls import reverse_lazy
 from django.db.models import Q
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.auth.decorators import login_required
+
 
 class PostList(ListView):
     model = Post
     ordering = '-pk'
     template_name = 'blog/blog.html'
+    print(dir(ListView))
     def get_queryset(self):
-        request = self.request
-        a = search(request)
-        return a
+        queryset = super().get_queryset()
+        q = self.request.GET.get('q', '')
+        if q:
+            queryset = queryset.filter(Q(title__icontains=q) | Q(contents__icontains=q) | Q(tags__name__icontains=q)).distinct()
+        return queryset
 
 
 blog = PostList.as_view()
@@ -38,16 +41,41 @@ class PostDetail(DetailView):
     model = Post
     template_name = 'blog/post.html'
 
+
     def get_object(self, queryset=None):
         pk = self.kwargs.get('pk')
-        print(self.kwargs)
+        # print(self.kwargs)
         post = Post.objects.get(pk=pk)
         post.view_count += 1
         post.save()
         return super().get_object(queryset)
+    
+    def post(self, request, pk):
+        post = Post.objects.get(pk=pk)
+        # form = CommentForm()
+        # print(request.POST)
+        # if request == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            c = Comment.objects.create(
+                content=form.cleaned_data['content'],
+                post=post,
+                author=request.user
+            )
+            c.save()
+        return render(request, 'blog/post.html', {'post': post, 'form': form})
 
+
+
+def comments_delete(request, pk, comment_pk):
+    print(request)
+    comment = Comment.objects.get(pk=comment_pk)
+    print(comment)
+    comment.delete()
+    return redirect('blog:post', pk)
 
 post = PostDetail.as_view()
+
 
 class PostCreate(LoginRequiredMixin, CreateView):
     model = Post
