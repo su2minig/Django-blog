@@ -1,6 +1,4 @@
 from typing import Any
-# from django.db.models.query import QuerySet
-# from django.http import HttpResponse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post, Comment
 from .forms import PostForm, CommentForm
@@ -8,13 +6,14 @@ from django.urls import reverse_lazy
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.decorators import login_required
 
 
-class PostList(ListView):
+class PostListView(ListView):
     model = Post
     ordering = '-pk'
     template_name = 'blog/blog.html'
-    print(dir(ListView))
+    
     def get_queryset(self):
         queryset = super().get_queryset()
         q = self.request.GET.get('q', '')
@@ -23,24 +22,17 @@ class PostList(ListView):
         return queryset
 
 
-blog = PostList.as_view()
-
-def search(request):
-    if request.GET.get('q'):
-        q = request.GET.get('q')
-        result = Post.objects.filter(Q(title__icontains=q) | Q(contents__icontains=q) | Q(tags__name__icontains=q)).distinct()
-    else:
-        result = Post.objects.all()
-    # print(result)
-    return result
-    # return render(request, 'blog/blog.html', {'result': result})
+blog = PostListView.as_view()
 
 
-
-class PostDetail(DetailView):
+class PostDetailView(DetailView):
     model = Post
     template_name = 'blog/post.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['comment_form'] = CommentForm()
+        return context
 
     def get_object(self, queryset=None):
         pk = self.kwargs.get('pk')
@@ -50,37 +42,36 @@ class PostDetail(DetailView):
         post.save()
         return super().get_object(queryset)
     
-    def post(self, request, pk):
-        post = Post.objects.get(pk=pk)
-        # form = CommentForm()
-        # print(request.POST)
-        # if request == 'POST':
+
+@login_required
+def comment_create(request, pk):
+    post = Post.objects.get(pk=pk)
+    if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
-            c = Comment.objects.create(
-                content=form.cleaned_data['content'],
-                post=post,
-                author=request.user
-            )
-            c.save()
-        return render(request, 'blog/post.html', {'post': post, 'form': form})
+            comment = form.save(commit=False) # commit=False는 DB에 저장하지 않고 객체만 반환
+            comment.post = post
+            comment.author = request.user
+            comment.save()
+            return redirect('blog:post', pk)
+    else:
+        form = CommentForm()
+    return render(request, 'blog/post.html', {'form': form})
 
-
-
-def comments_delete(request, pk, comment_pk):
+def comment_delete(request, pk, comment_pk):
     print(request)
     comment = Comment.objects.get(pk=comment_pk)
     print(comment)
     comment.delete()
     return redirect('blog:post', pk)
 
-post = PostDetail.as_view()
+post = PostDetailView.as_view()
 
 
-class PostCreate(LoginRequiredMixin, CreateView):
+class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
-    success_url = reverse_lazy('blog')
+    success_url = reverse_lazy('blog:blog')
     template_name = 'blog/post_form.html'
 
     def form_valid(self, form):
@@ -92,27 +83,23 @@ class PostCreate(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-write = PostCreate.as_view()
+write = PostCreateView.as_view()
 
-class PostUpdate(UserPassesTestMixin, UpdateView):
+class PostUpdateView(UserPassesTestMixin, UpdateView):
     model = Post
     form_class = PostForm
-    success_url = reverse_lazy('blog')
-
+    success_url = reverse_lazy('blog:blog')
     def test_func(self): # UserPassesTestMixin에 있고 test_func() 메서드를 오버라이딩, True, False 값으로 접근 제한
         return self.get_object().author == self.request.user
 
-edit = PostUpdate.as_view()
+edit = PostUpdateView.as_view()
 
 
-class PostDelete(UserPassesTestMixin, DeleteView):
+class PostDeleteView(UserPassesTestMixin, DeleteView):
     model = Post
-    success_url = reverse_lazy('blog')
+    success_url = reverse_lazy('blog:blog')
 
     def test_func(self): # UserPassesTestMixin에 있고 test_func() 메서드를 오버라이딩, True, False 값으로 접근 제한
         return self.get_object().author == self.request.user
 
-delete = PostDelete.as_view()
-
-
-# search = PostSearch.as_view()
+delete = PostDeleteView.as_view()

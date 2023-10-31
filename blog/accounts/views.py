@@ -28,9 +28,9 @@ def profile(request):
     return render(request, 'accounts/profile.html')
 
 class AccountUpdateView(UpdateView):
-    model = User # 기존 AccountCreateView와 동일한 모델 값을 사용해요.
-    form_class = AccountUpdateForm # form을 만들어 값을 전달하게 되요. 
-    success_url = reverse_lazy('accountapp:hello_world') # 성공적으로 프로필이 완성되면 메인화면으로 넘겨줍니다.
+    model = User 
+    form_class = AccountUpdateForm 
+    success_url = reverse_lazy('profile') # 성공적으로 프로필이 완성되면 메인화면으로 넘겨줍니다.
     template_name = 'accounts/update.html' # template경로 값을 지정해줘요.
     
 
