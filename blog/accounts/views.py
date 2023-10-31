@@ -11,7 +11,7 @@ from .forms import UserForm
 
 signup = CreateView.as_view(
     form_class = UserForm,
-    template_name = 'accounts/form.html',
+    template_name = 'accounts/signupform.html',
     success_url = '/accounts/login/'
 )
 
