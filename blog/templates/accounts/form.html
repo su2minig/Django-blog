@@ -20,6 +20,7 @@
                 <fieldset class="form-group">
                     {{ form|crispy }}
                     <button class="btn btn-outline-info" type="submit">Sign Up</button>
+                    <button class="btn btn-outline-info"><a href="{% url 'accounts:login' %}">Login</a></button>
                 </fieldset>
             </form>
         </div>
