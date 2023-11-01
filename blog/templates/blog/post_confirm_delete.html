@@ -11,8 +11,8 @@
                     {% csrf_token %}
                 <div>"{{ post.title }}" 글을 정말 삭제하시겠습니까?</div>
                 <div style="display: flex;">
-                    <button style="margin-left: auto;" type="submit">네</button>
-                    <button style="margin-left: 5px;"><a href="{% url 'blog:post' post.pk %}">취소</a></button>
+                    <button class="btn btn-outline-info" style="margin-left: auto;" type="submit">네</button>
+                    <button class="btn btn-outline-info" style="margin-left: 5px;"><a href="{% url 'blog:post' post.pk %}">취소</a></button>
                 </div>
             </div>
         </div>

@@ -22,6 +22,7 @@ class PostListView(ListView):
         return queryset
 
 
+
 blog = PostListView.as_view()
 
 

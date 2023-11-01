@@ -13,8 +13,8 @@ class Post(models.Model):
         upload_to='blog/images/%Y/%m/%d',  blank=True)
     file = models.FileField(
         upload_to='blog/files/%Y/%m/%d',  blank=True)
-    created_at = models.DateTimeField(auto_now_add=True) # 처음 생성될 때만
-    updated_at = models.DateTimeField(auto_now=True) # 수정될 때마다
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     view_count = models.PositiveIntegerField(default=0)
     tags = models.ManyToManyField('Tag', blank=True)
 
