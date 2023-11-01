@@ -35,7 +35,6 @@ class UserManager(BaseUserManager):
         return user 
 
 
-
 class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
     email = models.EmailField(        
@@ -61,3 +60,4 @@ class User(AbstractBaseUser, PermissionsMixin):
     @property
     def is_staff(self):
         return self.is_admin
+    

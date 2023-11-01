@@ -11,12 +11,12 @@ from .forms import UserForm
 
 signup = CreateView.as_view(
     form_class = UserForm,
-    template_name = 'accounts/signupform.html',
+    template_name = 'accounts/form.html',
     success_url = '/accounts/login/'
 )
 
 login = LoginView.as_view(
-    template_name = 'accounts/form.html',
+    template_name = 'accounts/login.html',
 )
 
 logout = LogoutView.as_view(
@@ -30,7 +30,7 @@ def profile(request):
 class AccountUpdateView(UpdateView):
     model = User 
     form_class = AccountUpdateForm 
-    success_url = reverse_lazy('profile') # 성공적으로 프로필이 완성되면 메인화면으로 넘겨줍니다.
+    success_url = reverse_lazy('accounts:profile') # 성공적으로 프로필이 완성되면 메인화면으로 넘겨줍니다.
     template_name = 'accounts/update.html' # template경로 값을 지정해줘요.
     
 

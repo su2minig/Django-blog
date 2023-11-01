@@ -37,8 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 
+    # third apps
     'bootstrap4',
+    'django_bootstrap5',
+    'crispy_forms',
+    'crispy_bootstrap4',
     # custom apps
     'blog',
     'main',
@@ -135,3 +138,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
 AUTH_USER_MODEL = 'accounts.User'
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap4'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

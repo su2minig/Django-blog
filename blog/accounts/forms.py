@@ -4,12 +4,12 @@ from django import forms
 
 class AccountUpdateForm(UserCreationForm):
     nickname = forms.CharField(label="별명", widget=forms.TextInput)
-    profile_image = forms.ImageField(label="프로필 사진")
-    
+    profile_image = forms.ImageField(label="프로필 이미지")
 
     class Meta:
         model = User
         fields = ['nickname', 'profile_image','password1', 'password2']
+        
 
 
 class UserForm(UserCreationForm, forms.ModelForm):

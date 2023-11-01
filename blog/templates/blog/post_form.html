@@ -1,6 +1,22 @@
-<h2>Create / Update</h2>
-<form method="post" enctype="multipart/form-data">
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>postform</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <h2>Create / Update</h2>
+    <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">저장</button>
+    <button type="submit">저장</button><a href="{% url 'blog:post' post.pk %}">취소</a>
 </form>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<!--index.js 추가-->
+<script src="/js/app/index.js"></script>
+</body>
+</html>

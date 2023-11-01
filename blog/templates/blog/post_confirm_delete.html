@@ -1,6 +1,21 @@
-<form method="post">
-    {% csrf_token %}
-    <p>"{{ object.title }}" 글을 정말 삭제하시겠습니까?</p>
-    <button type="submit">네</button>
-    <a href="{% url 'post' object.pk %}">취소</a>
-</form>
+{% extends 'accounts/base.html' %}
+{% block content %}
+{% load static %}
+<header class="masthead" style="background-image: url('assets/img/post-bg.jpg')">
+</header>
+<article class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <form method="post">
+                    {% csrf_token %}
+                <div>"{{ post.title }}" 글을 정말 삭제하시겠습니까?</div>
+                <div style="display: flex;">
+                    <button style="margin-left: auto;" type="submit">네</button>
+                    <button style="margin-left: 5px;"><a href="{% url 'blog:post' post.pk %}">취소</a></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+{% endblock %}
