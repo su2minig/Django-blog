@@ -4,12 +4,12 @@ from . import views
 
 app_name = 'blog'
 urlpatterns = [
-    path('', views.blog, name='blog'),
-    path('<int:pk>/', views.post, name='post'),
-    path('<int:pk>/create/comment/', views.comment_create, name='comment_create'),
-    path('<int:pk>/delete/comment/<int:comment_pk>/', views.comment_delete, name='comment_delete'),
-    path('<int:pk>/update/comment/<int:comment_pk>/', views.comment_update, name='comment_update'),
-    path('write/', views.write, name='write'),
-    path('edit/<int:pk>/', views.edit, name='edit'),
-    path('delete/<int:pk>/', views.delete, name='delete'),
+    path('', views.PostListView.as_view(), name='blog'),
+    path('<int:pk>/', views.PostDetailView.as_view(), name='post'),
+    path('<int:pk>/create/comment/', views.CommentCreateView.as_view(), name='comment_create'),
+    path('<int:pk>/delete/comment/<int:comment_pk>/', views.CommentDeleteView.as_view(), name='comment_delete'),
+    path('<int:pk>/update/comment/<int:comment_pk>/', views.CommentUpdateView.as_view(), name='comment_update'),
+    path('write/', views.PostCreateView.as_view(), name='write'),
+    path('update/<int:pk>/', views.PostUpdateView.as_view(), name='update'),
+    path('delete/<int:pk>/', views.PostDeleteView.as_view(), name='delete'),
 ]

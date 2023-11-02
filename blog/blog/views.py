@@ -24,10 +24,6 @@ class PostListView(ListView):
         return queryset
 
 
-
-blog = PostListView.as_view()
-
-
 class PostDetailView(DetailView):
     model = Post
     template_name = 'blog/post.html'
@@ -64,67 +60,30 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
 
 comment_create = CommentCreateView.as_view()
 
-# class CommentUpdateView(UserPassesTestMixin, UpdateView):
-#     model = Comment
-#     form_class = CommentForm
-
-#     def test_func(self):
-#         return self.get_object().author == self.request.user
-
-#     def get_success_url(self):
-#         return reverse_lazy('blog:post', kwargs = {'pk':self.object.post.pk})
-
-# comment_update = CommentUpdateView.as_view()
-
-@login_required
-def comment_update(request, pk, comment_pk):
-    post = Post.objects.get(pk=pk)
-    comment = Comment.objects.get(pk=comment_pk)
-    if request.method == 'POST':
-        form = CommentForm(request.POST, instance=comment)
-        if form.is_valid():
-            form.save()
-            return redirect('blog:post', pk)
-    else:
-        form = CommentForm(instance=comment)
-    return redirect('blog:post', pk)
-
-# @login_required
-# def comment_create(request, pk):
-#     post = Post.objects.get(pk=pk)
-#     if request.method == 'POST':
-#         form = CommentForm(request.POST)
-#         if form.is_valid():
-#             comment = form.save(commit=False) # commit=False는 DB에 저장하지 않고 객체만 반환
-#             comment.post = post
-#             comment.author = request.user
-#             comment.save()
-#             return redirect('blog:post', pk)
-#     else:
-#         form = CommentForm()
-#     return render(request, 'blog/post.html', {'form': form})
-
-class CommentDeleteView(UserPassesTestMixin, DeleteView):
+class CommentUpdateView(UserPassesTestMixin, UpdateView):
     model = Comment
     form_class = CommentForm
-    template_name = 'blog/post.html'
+    pk_url_kwarg = 'comment_pk'
 
     def test_func(self):
         return self.get_object().author == self.request.user
 
     def get_success_url(self):
+        return reverse_lazy('blog:post', kwargs = {'pk':self.object.post.pk})
+
+comment_update = CommentUpdateView.as_view()
+
+
+class CommentDeleteView(UserPassesTestMixin, DeleteView):
+    model = Comment
+    pk_url_kwarg = 'comment_pk'
+
+    def test_func(self):
+        print(self.kwargs)
+        return self.get_object().author == self.request.user
+
+    def get_success_url(self):
         return reverse_lazy('blog:post', kwargs = {'pk':self.kwargs['pk']})
-
-
-comment_delete = CommentDeleteView.as_view()
-
-# def comment_delete(request, pk, comment_pk):
-#     print(request)
-#     comment = Comment.objects.get(pk=comment_pk)
-#     comment.delete()
-#     return redirect('blog:post', pk)
-
-post = PostDetailView.as_view()
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
@@ -134,15 +93,10 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     template_name = 'blog/post_form.html'
 
     def form_valid(self, form):
-        print(self)
-        print(form)
-        print(self.request)
         post = form.save(commit=False) # commit=False는 DB에 저장하지 않고 객체만 반환
         post.author = self.request.user
         return super().form_valid(form)
 
-
-write = PostCreateView.as_view()
 
 class PostUpdateView(UserPassesTestMixin, UpdateView):
     model = Post
@@ -151,14 +105,11 @@ class PostUpdateView(UserPassesTestMixin, UpdateView):
     def test_func(self): # UserPassesTestMixin에 있고 test_func() 메서드를 오버라이딩, True, False 값으로 접근 제한
         return self.get_object().author == self.request.user
 
-edit = PostUpdateView.as_view()
-
 
 class PostDeleteView(UserPassesTestMixin, DeleteView):
     model = Post
     success_url = reverse_lazy('blog:blog')
 
     def test_func(self): # UserPassesTestMixin에 있고 test_func() 메서드를 오버라이딩, True, False 값으로 접근 제한
+        print(self.get_object())
         return self.get_object().author == self.request.user
-
-delete = PostDeleteView.as_view()
