@@ -54,7 +54,9 @@
       <div class="content-section">
         <div class="media">
           {% if user.profile_image %}
-          <img class="rounded-circle account-img" src="{{ user.profile_image.url }}" alt="이미지없음">
+          <img class="rounded-circle account-img" src="{{ user.profile_image.url }}" alt="">
+          {% else %}
+          <img class="rounded-circle account-img" src="{% static 'assets/img/27002.jpg' %}" alt="">
           {% endif %}
           <div class="media-body">
             <h2 class="account-heading">{{user.nickname}}</h2>
