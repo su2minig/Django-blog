@@ -68,25 +68,31 @@
                 <div class="flex-shrink-0"><img class="rounded-circle article-img" src="{% static 'assets/img/27002.jpg' %}" alt="..." /></div>
                 {% endif %}
                 <div class="ms-3">
-                    <div class="fw-bold">{{comment.author}}-{{comment.updated_at}}</div>
-                    <div>{{ comment.content }}</div>
+                    <div class="fw-bold">작성자:{{comment.author}}-{{comment.updated_at}}</div>
+                    <div>내용:{{ comment.content }}</div>
                     {% if user == comment.author %}
-                    <form action="{% url 'blog:comment_update' post.pk comment.pk %}" method="post">
-                        {% csrf_token %}
-                        {{ comment_form.as_p }}
-                        <input class="btn btn-dark" type="submit" value="수정">
-                    </form>
-                    <form action="{% url 'blog:comment_delete' post.pk comment.pk %}" method="post">
-                        {% csrf_token %}
-                        <input class="btn btn-dark" type="submit" value="삭제">
-                    </form>
+                    <div class="comment" style="display: flex;">
+                        <form action="{% url 'blog:comment_update' post.pk comment.pk %}" method="post">
+                            {% csrf_token %}
+                            {{ comment_form.as_p }}
+                            <div style="margin-left: 215px; margin-bottom: 10px;">
+                                <input class="btn btn-dark btn-sm" type="submit" value="수정">
+                            </div>
+                        </form>
+                        <form action="{% url 'blog:comment_delete' post.pk comment.pk %}" method="post">
+                            {% csrf_token %}
+                            <div style="margin-top: 45px;">
+                                <input class="btn btn-dark btn-sm" type="submit" value="삭제">
+                            </div>
+                        </form>
+                    </div>
                     {% endif %}
                     <!-- 부모댓글끝 -->
                     <!-- 자식댓글시작 -->
                     <form action="{% url 'blog:recomment_create' post.pk %}" method="post" class="mb-4">
                         {% csrf_token %}
                         {% for recomment in recomment_form %}
-                        {% if recomment.label != 'Comment' %}
+                        {% if recomment.label == 'recomment' %}
                         {{ recomment.label}} : {{recomment}}
                         {% endif %}
                         {% endfor %}
@@ -95,31 +101,52 @@
                     </form>
                         {% for recomment in comment.recomments.all %}
                         <div class="d-flex mt-4">
-                            {% if recomment.author.profile_image %}
+                            &#8628{% if recomment.author.profile_image %}
                             <div class="flex-shrink-0"><img class="rounded-circle article-img" src="{{ recomment.author.profile_image.url }}" alt="..." /></div>
                             {% else %}
                             <div class="flex-shrink-0"><img class="rounded-circle article-img" src="{% static 'assets/img/27002.jpg' %}" alt="..." /></div>
                             {% endif %}
                             <div class="ms-3">
-                                <div class="fw-bold">{{recomment.author}}-{{recomment.updated_at}}</div>
-                                <div>{{recomment.content}}</div>
+                                <div class="fw-bold">작성자:{{recomment.author}}-{{recomment.updated_at}}</div>
+                                <div>내용:{{recomment.content}}</div>
                                 {% if user == recomment.author %}
-                                <form action="{% url 'blog:recomment_update' post.pk recomment.pk %}" method="post">
-                                    {% csrf_token %}
-                                    {{ comment_form.as_p }}
-                                    <input class="btn btn-dark" type="submit" value="수정">
-                                </form>
-                                <form action="{% url 'blog:recomment_delete' post.pk recomment.pk %}" method="post">
-                                    {% csrf_token %}
-                                    <input class="btn btn-dark" type="submit" value="삭제">
-                                </form>
+                                <div class="comment" style="display: flex;">
+                                    <form action="{% url 'blog:recomment_update' post.pk recomment.pk %}" method="post">
+                                        {% csrf_token %}
+                                        {{ UpdateComment_form.as_p }}
+                                        <div style="margin-left: 180px;">
+                                            <input class="btn btn-dark btn-sm" type="submit" value="수정">
+                                        </div>
+                                    </form>
+                                    <form action="{% url 'blog:recomment_delete' post.pk recomment.pk %}" method="post">
+                                        {% csrf_token %}
+                                        <div style="margin-top: 45px;">
+                                            <input class="btn btn-dark btn-sm" type="submit" value="삭제">
+                                        </div>
+                                    </form>
+                                    <form action="{% url 'blog:recomment_create' post.pk %}" method="post" class="mb-4">
+                                        {% csrf_token %}
+                                        {% for recomment in recomment_form %}
+                                        {% if recomment.label == 'recomment' %}
+                                        {{ recomment.label}} : {{recomment}}
+                                        {% endif %}
+                                        {% endfor %}
+                                        <input type="hidden" name="comment" value="{{ comment.pk }}">
+                                        <input type="submit" value="답글">
+                                    </form>
+                                </div>
                                 {% endif %}
                             </div>
                         </div>
+                        <!-- Divider-->
+                        <hr class="my-4" />
                         {% endfor %}
+
                         <!-- 자식댓글끝 -->
                 </div>
             </div>
+            <!-- Divider-->
+            <hr class="my-4" />
             {% endfor %}
         </div>
     </div>

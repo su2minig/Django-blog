@@ -33,6 +33,16 @@ class ReCommentForm(forms.ModelForm):
             'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 3})
         }
 
+
+class CommentUpdateForm(forms.ModelForm):
+    content = forms.CharField(label = '수정',)
+    class Meta:
+        model = Comment
+        fields = ['content']
+        widgets = {
+            'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 3})
+        }
+
 class TagForm(forms.ModelForm):
     class Meta:
         model = Tag

@@ -3,7 +3,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from .models import User
 from django.shortcuts import render
 from django.views.generic import CreateView
-from accounts.forms import ProfiledateForm
+from accounts.forms import ProfileUpdateForm
 from django.views.generic.edit import UpdateView
 from django.urls.base import reverse_lazy
 from .forms import UserForm
@@ -28,6 +28,6 @@ def profile(request):
 
 class ProfileUpdateView(UpdateView):
     model = User 
-    form_class = ProfiledateForm 
+    form_class = ProfileUpdateForm 
     success_url = reverse_lazy('accounts:profile')
     template_name = 'accounts/update.html'

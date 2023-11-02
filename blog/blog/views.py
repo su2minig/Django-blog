@@ -3,7 +3,7 @@ from django.db import models
 from django.http import HttpRequest, HttpResponse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post, Comment, ReComment
-from .forms import PostForm, CommentForm, ReCommentForm
+from .forms import PostForm, CommentForm, ReCommentForm, CommentUpdateForm
 from django.urls import reverse_lazy
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
@@ -32,6 +32,7 @@ class PostDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['comment_form'] = CommentForm()
         context['recomment_form'] = ReCommentForm()
+        context['UpdateComment_form'] = CommentUpdateForm()
         return context
 
     def get_object(self, queryset=None):
@@ -45,7 +46,7 @@ class PostDetailView(DetailView):
 class CommentCreateView(LoginRequiredMixin, CreateView):
     model = Comment
     form_class = CommentForm
-    template_name = 'blog/post.html'
+
     
     def form_valid(self, form):
         print(self)
@@ -64,7 +65,7 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
 class ReCommentCreateView(LoginRequiredMixin, CreateView):
     model = ReComment
     form_class = ReCommentForm
-    template_name = 'blog/post.html'
+
 
     def form_valid(self, form):
         post = Post.objects.get(pk=self.kwargs['pk'])
@@ -82,7 +83,7 @@ class ReCommentCreateView(LoginRequiredMixin, CreateView):
 
 class CommentUpdateView(UserPassesTestMixin, UpdateView):
     model = Comment
-    form_class = CommentForm
+    form_class = CommentUpdateForm
     pk_url_kwarg = 'comment_pk'
 
     def test_func(self):
