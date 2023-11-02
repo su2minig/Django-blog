@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import User
 from django import forms
 
-class AccountUpdateForm(UserCreationForm):
+class ProfiledateForm(UserCreationForm):
     nickname = forms.CharField(label="별명", widget=forms.TextInput)
     profile_image = forms.ImageField(label="프로필 이미지")
 
