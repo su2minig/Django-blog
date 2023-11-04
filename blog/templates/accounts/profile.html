@@ -43,14 +43,6 @@
 <main role="main" class="container">
   <div class="row">
     <div class="col-md-8">
-    {% if messages %}
-      {% for message in messages %}
-      <div class="alert alert-{{ message.tags }}">
-        {{ message }}
-      </div>
-      {% endfor %}
-    {% endif %}
-
       <div class="content-section">
         <div class="media">
           {% if user.profile_image %}
@@ -74,6 +66,12 @@
               {% if user.is_authenticated %}
               <li class="list-group-item list-group-item-light"><a href="{% url 'blog:blog' %}">Blog</a></li>
               <li class="list-group-item list-group-item-light"><a href="{% url 'accounts:update' pk=user.pk %}">프로필수정</a></li>
+              <li class="list-group-item list-group-item-light">
+                <form action="{% url 'accounts:delete' pk=user.pk %}" method="POST">
+                  {% csrf_token %}
+                  <input type="submit" value="회원탈퇴" >
+                </form>
+              </li>
               {% else %}
               <li class="list-group-item list-group-item-light"><a href="{% url 'blog:blog' %}">Blog</a></li>
               <li class="list-group-item list-group-item-light">Calendars</li>

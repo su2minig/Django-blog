@@ -42,13 +42,7 @@
         <main role="main" class="container">
             <div class="row">
                 <div class="col-md-8">
-                {% if messages %}
-                    {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}">
-                        {{ message }}
-                    </div>
-                    {% endfor %}
-                {% endif %}
+
                 {% block content %}{% endblock %}
                 </div>
                 <div class="col-md-4">
@@ -62,8 +56,8 @@
                             <li class="list-group-item list-group-item-light"><a href="{% url 'accounts:profile' %}">프로필</a></li>
                             {% else %}
                             <li class="list-group-item list-group-item-light"><a href="{% url 'blog:blog' %}">Blog</a></li>
-                            <li class="list-group-item list-group-item-light">Calendars</li>
-                            <li class="list-group-item list-group-item-light">etc</li>
+                            <!-- <li class="list-group-item list-group-item-light">Calendars</li>
+                            <li class="list-group-item list-group-item-light">etc</li> -->
                             {% endif %}
                         </ul>
                         </p>

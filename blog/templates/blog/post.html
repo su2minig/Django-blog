@@ -75,7 +75,7 @@
                         <form action="{% url 'blog:comment_update' post.pk comment.pk %}" method="post">
                             {% csrf_token %}
                             {{ comment_form.as_p }}
-                            <div style="margin-left: 215px; margin-bottom: 10px;">
+                            <div style="margin-left: 210px; margin-bottom: 10px;">
                                 <input class="btn btn-dark btn-sm" type="submit" value="수정">
                             </div>
                         </form>
@@ -101,7 +101,7 @@
                     </form>
                         {% for recomment in comment.recomments.all %}
                         <div class="d-flex mt-4">
-                            &#8628{% if recomment.author.profile_image %}
+                            {% if recomment.author.profile_image %}
                             <div class="flex-shrink-0"><img class="rounded-circle article-img" src="{{ recomment.author.profile_image.url }}" alt="..." /></div>
                             {% else %}
                             <div class="flex-shrink-0"><img class="rounded-circle article-img" src="{% static 'assets/img/27002.jpg' %}" alt="..." /></div>
@@ -114,25 +114,15 @@
                                     <form action="{% url 'blog:recomment_update' post.pk recomment.pk %}" method="post">
                                         {% csrf_token %}
                                         {{ UpdateComment_form.as_p }}
-                                        <div style="margin-left: 180px;">
+                                        <div style="margin-left: 150px;">
                                             <input class="btn btn-dark btn-sm" type="submit" value="수정">
                                         </div>
                                     </form>
                                     <form action="{% url 'blog:recomment_delete' post.pk recomment.pk %}" method="post">
                                         {% csrf_token %}
-                                        <div style="margin-top: 45px;">
+                                        <div style="margin-top: 71px;">
                                             <input class="btn btn-dark btn-sm" type="submit" value="삭제">
                                         </div>
-                                    </form>
-                                    <form action="{% url 'blog:recomment_create' post.pk %}" method="post" class="mb-4">
-                                        {% csrf_token %}
-                                        {% for recomment in recomment_form %}
-                                        {% if recomment.label == 'recomment' %}
-                                        {{ recomment.label}} : {{recomment}}
-                                        {% endif %}
-                                        {% endfor %}
-                                        <input type="hidden" name="comment" value="{{ comment.pk }}">
-                                        <input type="submit" value="답글">
                                     </form>
                                 </div>
                                 {% endif %}
