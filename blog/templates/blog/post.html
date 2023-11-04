@@ -37,12 +37,12 @@
             <a class="btn btn-outline-info" href="{% url 'blog:blog' %}">뒤로가기</a>
         </div>
     </article>
-        <!-- <section>
+        <section>
             <h3>
             {% for tag in post.tags.all %}
-            #{{tag.name}}
+            {{tag.name}}
             {% endfor %}</h3>
-        </section> -->
+        </section>
             
 
 <!-- Comments section-->
@@ -74,7 +74,7 @@
                     <div class="comment" style="display: flex;">
                         <form action="{% url 'blog:comment_update' post.pk comment.pk %}" method="post">
                             {% csrf_token %}
-                            {{ comment_form.as_p }}
+                            {{ UpdateComment_form.as_p }}
                             <div style="margin-left: 210px; margin-bottom: 10px;">
                                 <input class="btn btn-dark btn-sm" type="submit" value="수정">
                             </div>
@@ -97,7 +97,7 @@
                         {% endif %}
                         {% endfor %}
                         <input type="hidden" name="comment" value="{{ comment.pk }}">
-                        <input type="submit" value="답글">
+                        <input type="submit" value="답글" style="width: 45px; height: 28px;">
                     </form>
                         {% for recomment in comment.recomments.all %}
                         <div class="d-flex mt-4">
