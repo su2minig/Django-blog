@@ -99,8 +99,8 @@
                         <input type="hidden" name="comment" value="{{ comment.pk }}">
                         <input type="submit" value="답글" style="width: 45px; height: 28px;">
                     </form>
-                        {% for recomment in comment.recomments.all %}
-                        <div class="d-flex mt-4">
+                    {% for recomment in comment.recomments.all %}
+                            <div class="d-flex mt-4">
                             {% if recomment.author.profile_image %}
                             <div class="flex-shrink-0"><img class="rounded-circle article-img" src="{{ recomment.author.profile_image.url }}" alt="..." /></div>
                             {% else %}
