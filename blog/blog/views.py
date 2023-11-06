@@ -1,12 +1,8 @@
-from typing import Any
-from django.db import models
-from django.http import HttpRequest, HttpResponse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post, Comment, ReComment
 from .forms import PostForm, CommentForm, ReCommentForm, CommentUpdateForm
 from django.urls import reverse_lazy
 from django.db.models import Q
-from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
@@ -154,4 +150,3 @@ class ReCommentDeleteView(UserPassesTestMixin, DeleteView):
     
     def get_success_url(self):
         return reverse_lazy('blog:post', kwargs = {'pk':self.kwargs['pk']})
-
