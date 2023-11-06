@@ -4,6 +4,7 @@ from .forms import PostForm, CommentForm, ReCommentForm, CommentUpdateForm
 from django.urls import reverse_lazy
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.core.paginator import Paginator
 
 
 
@@ -11,6 +12,7 @@ class PostListView(ListView):
     model = Post
     ordering = '-pk'
     template_name = 'blog/blog.html'
+    paginate_by = 4
     
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -118,7 +120,7 @@ class CommentUpdateView(UserPassesTestMixin, UpdateView):
 
 class ReCommentUpdateView(UserPassesTestMixin, UpdateView):
     model = ReComment
-    form_class = ReCommentForm
+    form_class = CommentUpdateForm
     pk_url_kwarg = 'recomment_pk'
 
     def test_func(self):

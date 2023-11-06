@@ -7,12 +7,14 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ['title', 'contents', 'image', 'file','tags'] 
         widgets ={
-            'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'contents': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
-            'tags': forms.SelectMultiple(attrs={'class': 'form-control'}),
-            'image': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
-            'file': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
+            'title': forms.TextInput(attrs={'class': 'form-control postform'}),
+            'contents': forms.Textarea(attrs={'class': 'form-control postform', 'rows': 5}),
+            'tags': forms.SelectMultiple(attrs={'class': 'form-control postform'}),
+            'image': forms.ClearableFileInput(attrs={'class': 'form-control-file postform'}),
+            'file': forms.ClearableFileInput(attrs={'class': 'form-control-file postform'}),
         }
+
+
 class CommentForm(forms.ModelForm):
     content = forms.CharField(
         label='comment',)

@@ -2,25 +2,23 @@
 {% block content %}
 {% load static %}
         <!-- Page Header-->
-        <header class="masthead" style="background-image: url('assets/img/post-bg.jpg')">
-            <div class="container position-relative px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-md-10 col-lg-8 col-xl-7">
-                        <div class="post-heading">
-                            <h1>{{post.title}}</h1>
-                            <p>{{post.created_at}}</p>
-                            <p>{{post.view_count}}</p>
-                        </div>
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="post-heading">
+                        <h1>{{post.title}}</h1>
+                        작성자: <p>{{post.author}}</p>
+                        <p>{{post.created_at}}</p>
+                        조회수: <p>{{post.view_count}}</p>
                     </div>
                 </div>
             </div>
-        </header>
+        </div>
         <!-- Post Content-->
         <article class="mb-4">
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
-                        <p>{{post.author}}</p>
                         <p>{{post.contents}}</p>
                         {% if post.image %}
                         <img class="article-img" src="{{ post.image.url }}" alt="">
@@ -40,7 +38,7 @@
         <section>
             <h3>
             {% for tag in post.tags.all %}
-            {{tag.name}}
+            # {{tag.name}}
             {% endfor %}</h3>
         </section>
             
@@ -70,35 +68,35 @@
                 <div class="ms-3">
                     <div class="fw-bold">작성자:{{comment.author}}-{{comment.updated_at}}</div>
                     <div>내용:{{ comment.content }}</div>
+                    
                     {% if user == comment.author %}
                     <div class="comment" style="display: flex;">
-                        <form action="{% url 'blog:comment_update' post.pk comment.pk %}" method="post">
-                            {% csrf_token %}
-                            {{ UpdateComment_form.as_p }}
-                            <div style="margin-left: 210px; margin-bottom: 10px;">
-                                <input class="btn btn-dark btn-sm" type="submit" value="수정">
-                            </div>
-                        </form>
-                        <form action="{% url 'blog:comment_delete' post.pk comment.pk %}" method="post">
-                            {% csrf_token %}
-                            <div style="margin-top: 45px;">
-                                <input class="btn btn-dark btn-sm" type="submit" value="삭제">
-                            </div>
-                        </form>
+                        <div id="update_{{comment.pk}}" style="display: none;">
+                            <form action="{% url 'blog:comment_update' post.pk comment.pk %}" method="post">
+                                {% csrf_token %}
+                                {{ UpdateComment_form.as_p }}
+                                <div style="margin-left: 210px; margin-bottom: 10px;">
+                                    <input class="btn btn-no-style btn-sm" type="submit" value="수정" onclick="updateComment({{ comment.pk }})">
+                                </div>
+                            </form>
+                        </div>
+                        
                     </div>
                     {% endif %}
                     <!-- 부모댓글끝 -->
                     <!-- 자식댓글시작 -->
-                    <form action="{% url 'blog:recomment_create' post.pk %}" method="post" class="mb-4">
-                        {% csrf_token %}
-                        {% for recomment in recomment_form %}
-                        {% if recomment.label == 'recomment' %}
-                        {{ recomment.label}} : {{recomment}}
-                        {% endif %}
-                        {% endfor %}
-                        <input type="hidden" name="comment" value="{{ comment.pk }}">
-                        <input type="submit" value="답글" style="width: 45px; height: 28px;">
-                    </form>
+                    <div class="col-12 mt-3 mb-1" id="text_{{ comment.pk }}"  style="display: none;" >
+                        <form action="{% url 'blog:recomment_create' post.pk %}" method="post" class="mb-4">
+                            {% csrf_token %}
+                            {% for recomment in recomment_form %}
+                            {% if recomment.label == 'recomment' %}
+                            {{ recomment.label}} : {{recomment}}
+                            {% endif %}
+                            {% endfor %}
+                            <input type="hidden" name="comment" value="{{ comment.pk }}">
+                            <input type="submit" value="답글" style="width: 45px; height: 28px;">
+                        </form>
+                    </div>
                     {% for recomment in comment.recomments.all %}
                             <div class="d-flex mt-4">
                             {% if recomment.author.profile_image %}
@@ -110,29 +108,39 @@
                                 <div class="fw-bold">작성자:{{recomment.author}}-{{recomment.updated_at}}</div>
                                 <div>내용:{{recomment.content}}</div>
                                 {% if user == recomment.author %}
-                                <div class="comment" style="display: flex;">
-                                    <form action="{% url 'blog:recomment_update' post.pk recomment.pk %}" method="post">
-                                        {% csrf_token %}
-                                        {{ UpdateComment_form.as_p }}
-                                        <div style="margin-left: 150px;">
-                                            <input class="btn btn-dark btn-sm" type="submit" value="수정">
-                                        </div>
-                                    </form>
+                                    <div id="replyupdate_{{recomment.pk}}" style="display: none;">
+                                        <form action="{% url 'blog:recomment_update' post.pk recomment.pk %}" method="post">
+                                            {% csrf_token %}
+                                            {{ UpdateComment_form.as_p }}
+                                            <div style="margin-left: 200px;">
+                                                <input class="btn btn-no-style btn-sm" type="submit" value="수정">
+                                            </div>
+                                        </form>
+                                    </div>
+                                {% endif %}
+                                <div style="display: flex;">
+                                    <button class="btn btn-link" style="text-decoration: none; color: #6c757d;" onclick="ReplyupdateComment({{ recomment.pk }})">수정</button>
                                     <form action="{% url 'blog:recomment_delete' post.pk recomment.pk %}" method="post">
                                         {% csrf_token %}
-                                        <div style="margin-top: 71px;">
-                                            <input class="btn btn-dark btn-sm" type="submit" value="삭제">
-                                        </div>
+                                        <input class="btn" style="text-decoration: none; color: #6c757d;" type="submit" value="삭제">
                                     </form>
                                 </div>
-                                {% endif %}
                             </div>
                         </div>
+                        
                         <!-- Divider-->
                         <hr class="my-4" />
                         {% endfor %}
 
                         <!-- 자식댓글끝 -->
+                </div>
+                <div>
+                    <button class="btn btn-link" style="text-decoration: none; color: #6c757d;" onclick="replyComment({{ comment.pk }})">답글</button>
+                    <button class="btn btn-link" style="text-decoration: none; color: #6c757d;" onclick="updateComment({{ comment.pk }})">수정</button>
+                    <form action="{% url 'blog:comment_delete' post.pk comment.pk %}" method="post">
+                        {% csrf_token %}
+                        <input class="btn" style="text-decoration: none; color: #6c757d;" type="submit" value="삭제">
+                    </form>
                 </div>
             </div>
             <!-- Divider-->
@@ -141,6 +149,45 @@
         </div>
     </div>
 </section>
+<script>
+    function replyComment(pk) {
+        const replyForm = document.getElementById('text_'+pk)
+        const replyBtn = document.getElementById('text_comment_btn_'+pk)
+        console.log(' ', replyForm.style.display)
+        if (replyForm.style.display == "none") {
+            replyForm.setAttribute('style', 'display:block;')
+            replyBtn.innerHTML = "접기"
+        } else {
+            replyForm.setAttribute('style', 'display:none;')
+            replyBtn.innerHTML = "댓글 달기"
+        }
+    }
+
+    function updateComment(pk){
+        const updateForm = document.getElementById('update_'+pk)
+        const updateBtn = document.getElementById('update_comment_btn_'+pk)
+        if (updateForm.style.display == "none") {
+            updateForm.setAttribute('style', 'display:block;')
+            updateBtn.innerHTML = "접기"
+        } else {
+            updateForm.setAttribute('style', 'display:none;')
+            updateBtn.innerHTML = "수정"
+        }
+    }
+
+    function ReplyupdateComment(pk){
+        const replyupdateform = document.getElementById('replyupdate_'+pk)
+        const replyupdateBtn = document.getElementById('replyupdate_comment_btn_'+pk)
+        if (replyupdateform.style.display == "none") {
+            replyupdateform.setAttribute('style', 'display:block;')
+            replyupdateBtn.innerHTML = "접기"
+        } else {
+            replyupdateform.setAttribute('style', 'display:none;')
+            replyupdateBtn.innerHTML = "수정"
+        }
+    }
+</script>
+
 {% endblock %}
 
 

@@ -38,8 +38,7 @@ class ProfileUpdateView(UpdateView):
 class UserDeleteView(UserPassesTestMixin, DeleteView):
     model = User
     success_url = reverse_lazy('blog:blog')
+    template_name = 'accounts/user_confirm_delete.html'
 
-    def test_func(self): # UserPassesTestMixin에 있고 test_func() 메서드를 오버라이딩, True, False 값으로 접근 제한
-        print(self.get_object())
-        print(self.get_object().pk)
-        return self.get_object().pk == self.request.user.pk
+    def test_func(self):
+        return self.get_object() == self.request.user

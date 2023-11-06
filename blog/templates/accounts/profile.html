@@ -67,10 +67,7 @@
               <li class="list-group-item list-group-item-light"><a href="{% url 'blog:blog' %}">Blog</a></li>
               <li class="list-group-item list-group-item-light"><a href="{% url 'accounts:update' pk=user.pk %}">프로필수정</a></li>
               <li class="list-group-item list-group-item-light">
-                <form action="{% url 'accounts:delete' pk=user.pk %}" method="POST">
-                  {% csrf_token %}
-                  <input type="submit" value="회원탈퇴" >
-                </form>
+              <a href="{% url 'accounts:delete' user.pk %}">회원탈퇴</a>
               </li>
               {% else %}
               <li class="list-group-item list-group-item-light"><a href="{% url 'blog:blog' %}">Blog</a></li>
