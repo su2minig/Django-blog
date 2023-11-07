@@ -395,14 +395,14 @@
 
 * `DEBUG`를 `False`로 설정하면 static file, media file 사용불가현상
 
-  - 발생 원인: 일반적으로 `DEBUG=False`인 경우는` static file`을 `django project`에서 제공하지 않는다고한다.
+  - 발생 원인: 일반적으로` static file`을 `django project`에서 제공하지 않는다고한다.
   - 해결 방법:
-    1.
+
+     1.
 
       ```
                   urlpattern += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
                   urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
        ```
     이 방법은 `DEBUG=True`, `runserver` 로 서버 돌릴 때에만 작동한다.
 
