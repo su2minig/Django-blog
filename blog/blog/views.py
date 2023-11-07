@@ -49,7 +49,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     template_name = 'blog/post_form.html'
 
     def form_valid(self, form):
-        post = form.save(commit=False) # commit=False는 DB에 저장하지 않고 객체만 반환
+        post = form.save(commit=False)
         post.author = self.request.user
         return super().form_valid(form)
 
@@ -59,7 +59,7 @@ class PostUpdateView(UserPassesTestMixin, UpdateView):
     form_class = PostForm
     success_url = reverse_lazy('blog:blog')
     
-    def test_func(self): # UserPassesTestMixin에 있고 test_func() 메서드를 오버라이딩, True, False 값으로 접근 제한
+    def test_func(self):
         return self.get_object().author == self.request.user
 
 
@@ -67,7 +67,7 @@ class PostDeleteView(UserPassesTestMixin, DeleteView):
     model = Post
     success_url = reverse_lazy('blog:blog')
 
-    def test_func(self): # UserPassesTestMixin에 있고 test_func() 메서드를 오버라이딩, True, False 값으로 접근 제한
+    def test_func(self):
         print(self.get_object())
         return self.get_object().author == self.request.user
 
@@ -91,7 +91,6 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
 class ReCommentCreateView(LoginRequiredMixin, CreateView):
     model = ReComment
     form_class = ReCommentForm
-
 
     def form_valid(self, form):
         post = Post.objects.get(pk=self.kwargs['pk'])
