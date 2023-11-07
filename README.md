@@ -169,7 +169,8 @@
 
 ## 명세표
 
-![명세표](https://github.com/su2minig/Django-blog/assets/141402694/bdae710a-4da0-4a27-85ee-1b76d5c210fd)
+![명세표](https://github.com/su2minig/Django-blog/assets/141402694/76abe708-1df2-420b-9021-b8bc23e78e7c)
+
 
 # 개발환경
 
@@ -406,7 +407,7 @@
        ```
     이 방법은 `DEBUG=True`, `runserver` 로 서버 돌릴 때에만 작동한다.
 
-    2. `DEBUG=False`인 경우엔 `python manage.py runserver --insecure`로 static file 까지는 제공가능하지만, media의 경우 지원되지 않음((보안 모드를 사용하지 않음).
+    2. `DEBUG=False`인 경우엔 `python manage.py runserver --insecure`로 static file 까지는 제공가능하지만, media의 경우 지원되지 않음(보안 모드를 사용하지 않음).
 
     3. `STATIC_ROOT`를 설정한 후 `python manage.py collectstatic` 명령어를 사용하면 설정된 `STATIC_ROOT`에 경로의 정적 파일들을 모두 모아준다.
    
