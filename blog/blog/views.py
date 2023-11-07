@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.paginator import Paginator
+from django.shortcuts import get_object_or_404, render
 
 
 
@@ -12,7 +13,7 @@ class PostListView(ListView):
     model = Post
     ordering = '-pk'
     template_name = 'blog/blog.html'
-    paginate_by = 4
+    paginate_by = 5
     
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -39,7 +40,7 @@ class PostDetailView(DetailView):
         post.view_count += 1
         post.save()
         return super().get_object(queryset)
-
+        
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
@@ -57,6 +58,7 @@ class PostUpdateView(UserPassesTestMixin, UpdateView):
     model = Post
     form_class = PostForm
     success_url = reverse_lazy('blog:blog')
+    
     def test_func(self): # UserPassesTestMixin에 있고 test_func() 메서드를 오버라이딩, True, False 값으로 접근 제한
         return self.get_object().author == self.request.user
 
@@ -74,9 +76,7 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
     model = Comment
     form_class = CommentForm
 
-    
     def form_valid(self, form):
-        print(self.kwargs)
         post = Post.objects.get(pk=self.kwargs['pk'])
         comment = form.save(commit=False)
         comment.post = post
@@ -95,7 +95,6 @@ class ReCommentCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         post = Post.objects.get(pk=self.kwargs['pk'])
-        print(post.comments.all())
         recomment = form.save(commit=False)
         recomment.post = post
         recomment.author = self.request.user

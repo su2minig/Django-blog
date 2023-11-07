@@ -153,7 +153,6 @@
     function replyComment(pk) {
         const replyForm = document.getElementById('text_'+pk)
         const replyBtn = document.getElementById('text_comment_btn_'+pk)
-        console.log(' ', replyForm.style.display)
         if (replyForm.style.display == "none") {
             replyForm.setAttribute('style', 'display:block;')
             replyBtn.innerHTML = "접기"
