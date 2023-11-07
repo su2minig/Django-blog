@@ -1,6 +1,13 @@
 # Django-blog
 
+# 기획
+
+:bookmark:플레이하는 게임의 공략, 플레이 영상 글을 기록할 블로그:bookmark:
+
+
 # WBS
+
+2023.10.25 ~ 2023.11.07
 
 ![wbs](https://github.com/su2minig/Django-blog/assets/141402694/b02017d8-baee-46b1-834a-ade5c99022b7)
 
@@ -179,7 +186,7 @@
 
 # 개발환경
 
-* 기술스택: 
+* 💻 기술스택: 
   <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
   <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white">
   <img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white">
@@ -382,8 +389,10 @@
   - 해결방법: 버전 2.0부터 `Crispy-bootstrap4`도 `pip install`한후 INSTALLED_APPS에 `"crispy_bootstrap4"`를 추가하고 `CRISPY_ALLOWED_TEMPLATE_PACKS  =  "bootstrap4"` 템플릿팩 허용을 추가해주었다.
  
 * 댓글 수정 삭제 시 404에러 발생
- - 발생 원인: shell에 들어가 각각 상속한 `deleteview`와 `updateview`을 dir로 확인해보니 `pk_url_kwarg`를 보고 찾아보니 전달되는 pk값이 `post`의 pk와 `comment`의 comment_pk 이 두개의 pk값이 전달되었는데 `pk_url_kwarg`에 `post`의 pk값인 pk가 들어가서 댓글의 쿼리값을 찾지못해 발생한 것이였다.
- - 해결방법: `pk_url_kwarg = comment_pk`값을 설정을 해주니 해결되었다.
+
+  - 발생 원인: shell에 들어가 각각 상속한 `deleteview`와 `updateview`을 dir로 확인해보니 `pk_url_kwarg`를 보고 찾아보니 전달되는 pk값이 `post`의 pk와 `comment`의 comment_pk 이 두개의 pk값이 전달되었는데 `pk_url_kwarg`에 `post`의 pk값인 pk가 들어가서 댓글의 쿼리값을 찾지못해 발생한 것이였다.
+
+  - 해결방법: `pk_url_kwarg = comment_pk`값을 설정을 해주니 해결되었다.
 
 * `DEBUG`를 `False`로 설정하면 static file, media file 사용불가현상
 
