@@ -261,11 +261,102 @@
 
 ### 메인페이지
 
-![메인페이지](https://github.com/su2minig/Django-blog/assets/141402694/0a0f0a87-8ccc-446f-a7df-60268972d103)
+![메인페이지](https://github.com/su2minig/Django-blog/assets/141402694/7864588c-90b9-4d40-9e25-4a1a78d2ac92)
 
 
-![메인페이지(비로그인)](https://github.com/su2minig/Django-blog/assets/141402694/c43ff314-cc39-445e-b26c-86821001c80d)
+![메인페이지(비로그인)](https://github.com/su2minig/Django-blog/assets/141402694/16552f2d-d3d3-4d55-b94e-51512b1efc4d)
 
 
 
-* 메인페이지화면으로 
+
+* 메인페이지화면으로 로그인시에는 상단에 메인페이지로 이동하는 home과 로그아웃이 있고 바로가기를 통해서 게시판과 프로필로 이동가능합니다.
+* 비로그인시에는 상단에 로그아웃버튼대신 로그인버튼과 회원가입버튼이 있고 바로가기에는 게시판만 이동가능합니다.
+
+### 게시판
+
+![게시판페이지](https://github.com/su2minig/Django-blog/assets/141402694/e3908a7e-863e-402e-bbfd-b30ec7e9a758)
+
+![게시판페이지(비로그인)](https://github.com/su2minig/Django-blog/assets/141402694/48d7aba7-be24-47af-a00f-43953498df51)
+
+![게시판검색](https://github.com/su2minig/Django-blog/assets/141402694/920a3712-8711-4695-aa40-6f429545c7e7)
+
+![게시판 페이지이동gif](https://github.com/su2minig/Django-blog/assets/141402694/0cfab991-75a6-46ba-84c1-e222a476f8f5)
+
+* 게시판페이지의 경우 비로그인자도 글목록과 게시물을 볼 수 있지만 게시물 작성은 불가합니다.
+* 검색창에 단어를 검색할경우 게시물의 제목과 내용 태그에 해당 단어가 포함된 게시물 목록을 보여줍니다.
+* 게시물 5개를 기준으로 페이지가 나뉘며 화살표를 통하여 페이지 이동이 가능합니다(현재 페이지는 빨간색으로표시).
+
+### 게시물
+
+![게시물 상세](https://github.com/su2minig/Django-blog/assets/141402694/582e0899-6f18-437f-8108-1c65a93c6782)
+
+![게시물상세비로그인](https://github.com/su2minig/Django-blog/assets/141402694/0e165aff-dfb7-46a9-b9d8-f262762b2350)
+
+* 게시물의 제목,작성자,작성날짜,내용,태그,댓글을 확인가능합니다.
+* 해당 게시물 작성자를 제외한 유저는 게시물 수정버튼과 삭제 버튼이 없습니다.
+
+### 게시물 작성
+
+![게시물작성(비로그인)gif](https://github.com/su2minig/Django-blog/assets/141402694/35354326-96ae-46e3-88cc-176a6587e64e)
+
+![게시물작성gif](https://github.com/su2minig/Django-blog/assets/141402694/03149eec-bce7-4e87-beaf-711e5f243d01)
+
+![입력란](https://github.com/su2minig/Django-blog/assets/141402694/c05b7e5e-1a06-44a0-92f4-ab7a35090d76)
+
+* 비로그인자가 이용시 로그인페이지로 이동됩니다.
+* 로그인이 되어있으면 작성폼 페이지로 이동합니다.
+* 제목,내용은 필수로 작성해야하며 작성한 뒤 저장을 누르면 작성이 완료됩니다(제목,내용 입력안하고 저장 시 해당칸 작성을 요구합니다).
+* 작성완료 시 게시판으로 이동합니다.
+
+### 게시물 수정
+
+![게시물삭제(비로그인)](https://github.com/su2minig/Django-blog/assets/141402694/0721c85e-04a1-4c0e-a0d1-e681e5484c84)
+
+![게시물수정gif](https://github.com/su2minig/Django-blog/assets/141402694/a22020a6-c546-4358-9e94-dc2fed5962e2)
+
+* 게시물 수정은 해당 게시물의 작성자일 경우에만 수정버튼이 보이며 클릭 시 수정페이지로 이동하여 기존 게시물의 내용의 변경이 가능합니다.
+
+### 게시물 삭제
+
+![게시물삭제(비로그인)](https://github.com/su2minig/Django-blog/assets/141402694/0721c85e-04a1-4c0e-a0d1-e681e5484c84)
+
+![게시물삭제](https://github.com/su2minig/Django-blog/assets/141402694/39863347-2480-484d-9d0a-254b2febd1c0)
+
+### 댓글
+
+![댓글 답글작성git](https://github.com/su2minig/Django-blog/assets/141402694/0a35275e-b57a-4888-83a4-aa56de9573c3)
+
+![댓글 답글수정및삭제gif](https://github.com/su2minig/Django-blog/assets/141402694/df4edb0e-7a6f-47d0-aae5-470ad0583559)
+
+* 게시물에는 댓글을 달 수 있습니다.
+* 로그인을 하지 않은 유저가 사용시 로그인페이지로 이동됩니다.
+* 게시물에 달린 댓글에 답글을 할 수 있습니다.
+* 삭제 버튼 사용 시 댓글을 삭제할 수 있습니다.
+* 수정 버튼 사용 시 수정폼이 나오며 댓글의 내용을 수정할 수 있습니다.
+
+### 프로필
+
+![프로필페이지](https://github.com/su2minig/Django-blog/assets/141402694/427a0640-a358-4492-bdce-4ae02080d57d)
+
+* 로그인한 유저의 프로필 페이지입니다.
+* 해당 유저의 프로필사진 이메일 닉네임을 보여줍니다.
+* 바로가기를 통해서 게시판, 프로필수정, 회원탈퇴페이지로 이동이 가능합니다.
+
+### 프로필 수정
+
+![프로필수정페이지](https://github.com/su2minig/Django-blog/assets/141402694/99f1c37e-0f44-4dde-988c-65db2c92aa90)
+
+![불일치](https://github.com/su2minig/Django-blog/assets/141402694/9c1d05ce-2fa8-410a-853e-548214edba29)
+
+* 유저의 별명,프로필이미지, 비밀번호의 변경이 가능합니다.
+* 비밀번호와 비밀번호 확인의 값이 다를경우 비밀번호 불일치를 알려주고 재입력을 요구합니다.
+
+### 회원탈퇴
+
+![회원탈퇴gif](https://github.com/su2minig/Django-blog/assets/141402694/5ad75356-7fd4-4cf8-ab06-496bdd679ab1)
+
+![회원탈퇴취소gif](https://github.com/su2minig/Django-blog/assets/141402694/4ac7bb07-6265-4d26-af81-125eb7a7038b)
+
+* 회원탈퇴 클릭 시 탈퇴여부를 재확인합니다.
+* '네'를 클릭 시 유저의 정보를 삭제후 로그아웃됩니다.
+* '취소'를 클릭 시 다시 프로필로 이동합니다.
