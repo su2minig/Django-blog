@@ -4,17 +4,12 @@
 
 ![wbs](https://github.com/su2minig/Django-blog/assets/141402694/b02017d8-baee-46b1-834a-ade5c99022b7)
 
-
-# 개발환경
-
-* 기술스택: 
-  <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
-  <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white">
-  <img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white">
-  <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
-  <img src="https://img.shields.io/badge/django-092E20?style=for-the-badge&logo=django&logoColor=white">
-
 # 단계별 요구사항
+
+### 기본 요구사항
+
+ - 모놀리식
+ - 데이터베이스 구조 설계
 
 ### 0단계: Django Admin을 이용한 게시글 읽기 및 메인페이지 구현하기
 <details markdown="1">
@@ -50,7 +45,7 @@
 <details markdown="1">
 <summary>요구사항</summary>
   
-1. **게시글 작성 기능 구현**
+1. 게시글 작성 기능 구현
     
     <aside>
     🧐 로그인이 되지 않더라도 글 작성이 가능합니다. 인증은 다음단계에 있습니다.    
@@ -61,7 +56,7 @@
     - 작성한 게시글이 저장되어 게시글 목록에 보여야 합니다.
     - 카테고리가 지정될 수 있어야 합니다.
 
-2. **게시글 수정 기능 구현**
+2. 게시글 수정 기능 구현
 
     - url : `/blog/edit/<int:id>`
     
@@ -71,7 +66,7 @@
 
      - 수정된 내용은 게시글 목록보기/상세보기에 반영되어야합니다.
 
-3. **게시글 삭제 기능 구현**
+3. 게시글 삭제 기능 구현
 
     - url : `/blog/delete/<int:id>`
 
@@ -82,7 +77,7 @@
     - 삭제된 게시글은 게시글 목록보기/상세보기에서 접근이 불가능하며,
     접근 시도 시 404 에러가 뜨게 됩니다.
 
-4. **게시글 검색 기능 구현**
+4. 게시글 검색 기능 구현
 
      - url : `/blog/search/<str:tag>`
 
@@ -97,7 +92,7 @@
 <summary>요구사항</summary>
 
   
-  1. **메인페이지 구현**
+  1. 메인페이지 구현
 
      - 회원가입/로그인 버튼이 있습니다.
 
@@ -105,7 +100,7 @@
 
      - 로그인 버튼을 클릭하면 로그인 페이지로 이동합니다.
 
-  3. **회원가입 기능 구현**
+  2. 회원가입 기능 구현
       
       - url : `/register`
       
@@ -113,7 +108,7 @@
       
       - 입력받는 값은 id, password입니다.
 
-  4. **로그인 기능 구현**
+  3. 로그인 기능 구현
    
       - url : `/login`
  
@@ -121,41 +116,41 @@
   
       - 입력받는 값은 id, password입니다.
 
-  5. **게시글 작성 기능 구현**
+  4. 게시글 작성 기능 구현
   
-      - **로그인을 한 유저만 해당 기능을 사용 할 수 있습니다.**
+      - 로그인을 한 유저만 해당 기능을 사용 할 수 있습니다.
 
-  6. **게시글 목록 기능 구현**
+  5. 게시글 목록 기능 구현
 
-      - **모든 사용자들이 게시한 블로그 게시글들의 제목을 확인 할 수 있습니다.**
+     - 모든 사용자들이 게시한 블로그 게시글들의 제목을 확인 할 수 있습니다.
+        
+  6. 게시글 수정 기능 구현
 
-  8. **게시글 수정 기능 구현**
+      - 로그인을 한 유저만 해당 기능을 사용 할 수 있습니다.
 
-      - **로그인을 한 유저만 해당 기능을 사용 할 수 있습니다.**
+      - 본인의 게시글이 아니라면 수정이 불가능합니다.
 
-      - **본인의 게시글이 아니라면 수정이 불가능합니다.**
-
-  10. **게시글 삭제 기능 구현**
+  7. 게시글 삭제 기능 구현
    
-      - **로그인을 한 유저만 해당 기능을 사용 할 수 있습니다.**
+      - 로그인을 한 유저만 해당 기능을 사용 할 수 있습니다.
    
-      - **본인의 게시글이 아니라면 삭제가 불가능합니다.**
+      - 본인의 게시글이 아니라면 삭제가 불가
 
-      - **삭제된 게시글은 게시글 목록보기/상세보기에서 접근이 불가능하며,
-      접근 시도 시 <존재하지 않는 게시글입니다> 라는 페이지를 보여줍니다.**
+      - 삭제된 게시글은 게시글 목록보기/상세보기에서 접근이 불가능하며,
+      접근 시도 시 <존재하지 않는 게시글입니다> 라는 페이지를 보여줍니다.
 </details>
 
 ### 3단계: 블로그 기능 외 추가 기능 작성 및 배포
 <details markdown="1">
 <summary>요구사항</summary>
   
-  1. **게시글 작성 기능 구현**
+  1. 게시글 작성 기능 구현
 
-     - **사진 업로드가 가능하도록 합니다.**
+     - 사진 업로드
      
-     - **게시글 조회수가 올라갈 수 있도록 합니다.**
+     - 게시글 조회수 카운트
     
-  2. **회원 관련 추가 기능(UI 직접 구현 필요)**
+  2. 회원 관련 추가 기능
     
         - 비밀번호 변경기능
         
@@ -163,16 +158,13 @@
         
         - 닉네임 추가
    
-  3. **댓글 기능(UI 직접 구현 필요)**
+  3. 댓글 기능
       
       - 댓글 추가
         
       - 댓글 삭제
         
       - 대댓글
-        
-      - disqus와 같은 솔루션 서비스를 사용하시면 안됩니다.
-          - 가산점만 안될 뿐이지 완성도를 위해 추가하는 것은 괜찮습니다.
 
 </details>
 
@@ -184,6 +176,15 @@
 ## 명세표
 
 ![명세표](https://github.com/su2minig/Django-blog/assets/141402694/bdae710a-4da0-4a27-85ee-1b76d5c210fd)
+
+# 개발환경
+
+* 기술스택: 
+  <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
+  <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white">
+  <img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white">
+  <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
+  <img src="https://img.shields.io/badge/django-092E20?style=for-the-badge&logo=django&logoColor=white">
 
 
 # 프로젝트 구조
@@ -360,3 +361,51 @@
 * 회원탈퇴 클릭 시 탈퇴여부를 재확인합니다.
 * '네'를 클릭 시 유저의 정보를 삭제후 로그아웃됩니다.
 * '취소'를 클릭 시 다시 프로필로 이동합니다.
+
+# 겪은 오류들과 해결법
+
+* 게시물 댓글 작성기능 구현 중 발생한 405 에러
+  - 발생 원인 : `Request URL` 을 잘못 입력하여 매칭 안된 경우 또는 `HTTP 메서드 (GET/POST/PUT/...)` 가 잘못 매칭된 경우 생긴다고한다. 이번 경우에는 작성 `form`의 `action`에 `url`을 지정 안한 것을 발견했고 `url`을 작성해주니 제대로 댓글이 작성되었다.
+
+* `no such column` 에러
+  - recomment 모델을 작성하고서 migrate를 하지 않은 탓에 DB에 테이블이 반영이 안되어 발생하게되었다.
+    ```
+    python manage.py makemigrations
+    python manage.py migrate
+    ```
+    로 DB에 테이블을 반영한 후 해결되었다.
+
+* `crispy form`을 사용 중 `TemplateDoesNotExist: bootstrap4/uni_form.html` 에러 발생
+
+  - 발생원인: `django-crispy-forms` 2.0부터 템플릿 팩은 이제 별도의 패키지에 있다고한다.
+
+  - 해결방법: 버전 2.0부터 `Crispy-bootstrap4`도 `pip install`한후 INSTALLED_APPS에 `"crispy_bootstrap4"`를 추가하고 `CRISPY_ALLOWED_TEMPLATE_PACKS  =  "bootstrap4"` 템플릿팩 허용을 추가해주었다.
+ 
+* 댓글 수정 삭제 시 404에러 발생
+ - 발생 원인: shell에 들어가 각각 상속한 `deleteview`와 `updateview`을 dir로 확인해보니 `pk_url_kwarg`를 보고 찾아보니 전달되는 pk값이 `post`의 pk와 `comment`의 comment_pk 이 두개의 pk값이 전달되었는데 `pk_url_kwarg`에 `post`의 pk값인 pk가 들어가서 댓글의 쿼리값을 찾지못해 발생한 것이였다.
+ - 해결방법: `pk_url_kwarg = comment_pk`값을 설정을 해주니 해결되었다.
+
+* `DEBUG`를 `False`로 설정하면 static file, media file 사용불가현상
+
+  - 발생 원인: 일반적으로 `DEBUG=False`인 경우는` static file`을 `django project`에서 제공하지 않는다고한다.
+  - 해결 방법:
+    1.
+              ```
+                  urlpattern += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+                  urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+              ```
+    이 방법은 `DEBUG=True`, `runserver` 로 서버 돌릴 때에만 작동한다.
+
+    2. `DEBUG=False`인 경우엔 `python manage.py runserver --insecure`로 static file 까지는 제공가능하지만, media의 경우 지원되지 않음((보안 모드를 사용하지 않음).
+
+    3. `STATIC_ROOT`를 설정한 후 `python manage.py collectstatic` 명령어를 사용하면 설정된 `STATIC_ROOT`에 경로의 정적 파일들을 모두 모아준다.
+   
+    4. `media`, `static` 파일 `url` 경로 추가(project/urls.py)
+
+     ```
+    from django.views.static import serve
+
+    url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
+    url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
+     ```
+                
