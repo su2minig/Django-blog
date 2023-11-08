@@ -30,8 +30,8 @@
  - 데이터베이스 구조 설계
 
 ### 0단계: Django Admin을 이용한 게시글 읽기 및 메인페이지 구현하기
-<details markdown="1">
-<summary>요구사항</summary>
+
+#### 요구사항
 
 1. 메인 페이지 구현 - [O]
 
@@ -50,11 +50,9 @@
 
     * 게시글의 제목/내용을 보는 기능입니다.
 
-</details>
-
 ### 1단계: 블로그 CRUD 기능 구현하기
-<details markdown="1">
-<summary>요구사항</summary>
+
+#### 요구사항
   
 1. 게시글 작성 기능 구현 - [O]   
   
@@ -84,13 +82,10 @@
      - 게시글 제목, 내용, 태그에 따라 검색가능
 
      - 검색한 게시물은 시간순에 따라 정렬이 가능해야 합니다
-</details>
-
 
 ### 2단계: 로그인/회원가입 기능을 이용하여 블로그 구현하기
-<details markdown="1">
-<summary>요구사항</summary>
 
+#### 요구사항
   
   1. 메인페이지 구현 - [O]
 
@@ -131,11 +126,10 @@
       - 로그인을 한 유저만 해당 기능을 사용 가능
    
       - 본인의 게시글이 아니라면 삭제가 불가
-</details>
 
 ### 3단계: 블로그 기능 외 추가 기능 작성 및 배포
-<details markdown="1">
-<summary>요구사항</summary>
+
+#### 요구사항
   
   1. 게시글 작성 기능 구현 - [O]
 
@@ -160,8 +154,6 @@
       - 대댓글
     
   4. 정적파일 모으기 - [O]
-</details>
-
 
 ## 마인드맵
 
@@ -189,6 +181,8 @@
 ```
 📦blog
  ┣ 📂accounts
+ ┃ ┣ 📂migrations
+ ┃ ┣ 📂__pycache__
  ┃ ┣ 📜admin.py
  ┃ ┣ 📜apps.py
  ┃ ┣ 📜forms.py
@@ -197,7 +191,10 @@
  ┃ ┣ 📜urls.py
  ┃ ┣ 📜views.py
  ┃ ┗ 📜__init__.py
+ ┣ 📂all_static
  ┣ 📂blog
+ ┃ ┣ 📂migrations
+ ┃ ┣ 📂__pycache__
  ┃ ┣ 📜admin.py
  ┃ ┣ 📜apps.py
  ┃ ┣ 📜forms.py
@@ -207,6 +204,8 @@
  ┃ ┣ 📜views.py
  ┃ ┗ 📜__init__.py
  ┣ 📂main
+ ┃ ┣ 📂migrations
+ ┃ ┣ 📂__pycache__
  ┃ ┣ 📜admin.py
  ┃ ┣ 📜apps.py
  ┃ ┣ 📜models.py
@@ -215,6 +214,7 @@
  ┃ ┣ 📜views.py
  ┃ ┗ 📜__init__.py
  ┣ 📂makeblog
+ ┃ ┣ 📂__pycache__
  ┃ ┣ 📜asgi.py
  ┃ ┣ 📜settings.py
  ┃ ┣ 📜urls.py
@@ -222,12 +222,10 @@
  ┃ ┗ 📜__init__.py
  ┣ 📂media
  ┃ ┣ 📂accounts
- ┃ ┃ ┗ 📂profile_images
  ┃ ┗ 📂blog
- ┃ ┃ ┗ 📂images
  ┣ 📂static
  ┃ ┣ 📂assets
- ┃ ┃ ┣ 📂img
+ ┃ ┃ ┗ 📜favicon.ico
  ┃ ┗ 📂blog
  ┃ ┃ ┗ 📜main.css
  ┣ 📂templates
@@ -237,7 +235,8 @@
  ┃ ┃ ┣ 📜form.html
  ┃ ┃ ┣ 📜login.html
  ┃ ┃ ┣ 📜profile.html
- ┃ ┃ ┗ 📜update.html
+ ┃ ┃ ┣ 📜update.html
+ ┃ ┃ ┗ 📜user_confirm_delete.html
  ┃ ┣ 📂blog
  ┃ ┃ ┣ 📜blog.html
  ┃ ┃ ┣ 📜post.html
@@ -261,10 +260,7 @@
 
 ![메인페이지](https://github.com/su2minig/Django-blog/assets/141402694/7864588c-90b9-4d40-9e25-4a1a78d2ac92)
 
-
 ![메인페이지(비로그인)](https://github.com/su2minig/Django-blog/assets/141402694/16552f2d-d3d3-4d55-b94e-51512b1efc4d)
-
-
 
 
 * 메인페이지화면으로 로그인시에는 상단에 메인페이지로 이동하는 home과 로그아웃이 있고 바로가기를 통해서 게시판과 프로필로 이동가능합니다.
@@ -364,59 +360,36 @@
 # 겪은 오류들과 해결법
 
 * 게시물 댓글 작성기능 구현 중 발생한 405 에러
-  - 발생 원인 : `Request URL` 을 잘못 입력하여 매칭 안된 경우 또는 `HTTP 메서드 (GET/POST/PUT/...)` 가 잘못 매칭된 경우 생긴다고한다. 이번 경우에는 작성 `form`의 `action`에 `url`을 지정 안한 것을 발견했고 `url`을 작성해주니 제대로 댓글이 작성되었다.
+  - 발생 원인 :
+  
+    `Request URL` 을 잘못 입력하여 매칭 안된 경우 또는 `HTTP 메서드 (GET/POST/PUT/...)` 가 잘못 매칭된 경우 생긴다고한다. 이번 경우에는 작성 `form`의 `action`에
+    `url`을 지정 안한 것을 발견했고 `url`을 작성해주니 제대로 댓글이 작성되었습니다.
 
 * `no such column` 에러
-  - recomment 모델을 작성하고서 migrate를 하지 않은 탓에 DB에 테이블이 반영이 안되어 발생하게되었다.
+  - recomment 모델을 작성하고서 migrate를 하지 않은 탓에 DB에 테이블이 반영이 안되어 발생하게되었습니다.
     ```
     python manage.py makemigrations
     python manage.py migrate
     ```
-    로 DB에 테이블을 반영한 후 해결되었다.
+    로 DB에 테이블을 반영한 후 해결되었습니다.
 
 * `crispy form`을 사용 중 `TemplateDoesNotExist: bootstrap4/uni_form.html` 에러 발생
 
   - 발생원인: `django-crispy-forms` 2.0부터 템플릿 팩은 이제 별도의 패키지에 있다고한다.
 
-  - 해결방법: 버전 2.0부터 `Crispy-bootstrap4`도 `pip install`한후 INSTALLED_APPS에 `"crispy_bootstrap4"`를 추가하고 `CRISPY_ALLOWED_TEMPLATE_PACKS  =  "bootstrap4"` 템플릿팩 허용을 추가해주었다.
+  - 해결방법: 버전 2.0부터 `Crispy-bootstrap4`도 `pip install`한후 INSTALLED_APPS에 `"crispy_bootstrap4"`를 추가하고 `CRISPY_ALLOWED_TEMPLATE_PACKS  =
+    "bootstrap4"` 템플릿팩 허용을 추가해주었다.
  
 * 댓글 수정 삭제 시 404에러 발생
 
-  - 발생 원인: shell에 들어가 각각 상속한 `deleteview`와 `updateview`을 dir로 확인해보니 `pk_url_kwarg`를 보고 찾아보니 전달되는 pk값이 `post`의 pk와 `comment`의 comment_pk 이 두개의 pk값이 전달되었는데 `pk_url_kwarg`에 `post`의 pk값인 pk가 들어가서 댓글의 쿼리값을 찾지못해 발생한 것이였다.
+  - 발생 원인: shell에 들어가 각각 상속한 `deleteview`와 `updateview`을 dir로 확인해보니 `pk_url_kwarg`를 보고 찾아보니 전달되는 pk값이 `post`의 pk와 `comment`
+    comment_pk 이 두개의 pk값이 전달되었는데 `pk_url_kwarg`에 `post`의 pk값인 pk가 들어가서 댓글의 쿼리값을 찾지못해 발생한 것이였다.
 
   - 해결방법:
-
-  ```
+    ```
     class ReCommentDeleteView(UserPassesTestMixin, DeleteView):
-            model = ReComment
-            pk_url_kwarg = 'recomment_pk'
-   ```
+        model = ReComment
+        pk_url_kwarg = 'recomment_pk'
+    ```
 
-  값을 설정을 해주니 해결되었다.
-
-* `DEBUG`를 `False`로 설정하면 static file, media file 사용불가현상
-
-  - 발생 원인: 일반적으로` static file`을 `django project`에서 제공하지 않는다고한다.
-  - 해결 방법:
-
-     1.
-
-      ```
-                  urlpattern += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-                  urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-       ```
-    이 방법은 `DEBUG=True`, `runserver` 로 서버 돌릴 때에만 작동한다.
-
-    2. `DEBUG=False`인 경우엔 `python manage.py runserver --insecure`로 static file 까지는 제공가능하지만, media의 경우 지원되지 않음(보안 모드를 사용하지 않음).
-
-    3. `STATIC_ROOT`를 설정한 후 `python manage.py collectstatic` 명령어를 사용하면 설정된 `STATIC_ROOT`에 경로의 정적 파일들을 모두 모아준다.
-   
-    4. `media`, `static` 파일 `url` 경로 추가(project/urls.py)
-
-     ```
-    from django.views.static import serve
-
-    url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
-    url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
-     ```
-                
+  값을 설정을 해주니 해결되었습니다.
